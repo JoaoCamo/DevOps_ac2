@@ -11,13 +11,12 @@ services:
   api:
     image: joaocamo/ac2:latest
     container_name: ac2_prod_api
+	networks:
+	      - default  # Certifique-se de que está usando a rede adequada
     environment:
-      SPRING_PROFILES_ACTIVE: prod
       DB_HOST: database
     ports:
-      - "8585:8585"
-    depends_on:
-      - database
+      - "8585:8080"
 
 volumes:
   db-volume:
