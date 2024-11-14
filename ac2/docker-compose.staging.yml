@@ -1,5 +1,3 @@
-version: '4'
-
 services:
   database:
     image: postgres
@@ -13,8 +11,8 @@ services:
   api:
     image: joaocamo/ac2:latest
     container_name: ac2_staging_api
-	networks:
-	      - default  # Certifique-se de que está usando a rede adequada
+    networks:
+      - default  # Certifique-se de que está usando a rede adequada
     environment:
       DB_HOST: database
     ports:

@@ -11,8 +11,8 @@ services:
   api:
     image: joaocamo/ac2:latest
     container_name: ac2_prod_api
-	networks:
-	      - default  # Certifique-se de que está usando a rede adequada
+    networks:
+      - default  # Certifique-se de que está usando a rede adequada
     environment:
       DB_HOST: database
     ports:
