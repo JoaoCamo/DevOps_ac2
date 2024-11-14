@@ -14,7 +14,7 @@ services:
     environment:
       DB_HOST: database
     ports:
-      - "8585:8585"
+      - "8585:8080"
 
 volumes:
   db-volume:
