@@ -1,7 +1,6 @@
 services:
   database:
     image: postgres
-    container_name: ac2_prod_database
     environment:
       POSTGRES_PASSWORD: ac2
       POSTGRES_DB: ac2_database_prod
@@ -10,7 +9,6 @@ services:
 
   api:
     image: joaocamo/ac2:latest
-    container_name: ac2_prod_api
     networks:
       - default  # Certifique-se de que está usando a rede adequada
     environment:
