@@ -1,23 +1,15 @@
 spring:
-  application:
-    name: ac2-prod
-
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ac2_database_prod
-	username: postgres
-	password: ac2
-
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:ac2_database_prod}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:ac2}
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: validate
-    show-sql: false
-    properties:
-      hibernate:
-        format_sql: false
-        use_sql_comments: false
-
-  h2:
-    console:
-      enabled: false
+      
+     
+hikari:
+      connection-timeout: 30000  # Tempo de espera para a conexão (em milissegundos)
+      maximum-pool-size: 5       # Tamanho máximo do pool de conexões
+      max-lifetime: 1800000      # Tempo máximo de vida para uma conexão no pool
+      idle-timeout: 600000       # Tempo de inatividade antes de uma conexão ser descartada

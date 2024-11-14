@@ -1,23 +1,8 @@
 spring:
-  application:
-    name: ac2
-
   datasource:
-    driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ac2_database
-    username: postgres
-    password: ac2
-
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:ac2_database}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:ac2}
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        use_sql_comments: true
-
-  h2:
-    console:
-      enabled: true
+      ddl-auto: validate
