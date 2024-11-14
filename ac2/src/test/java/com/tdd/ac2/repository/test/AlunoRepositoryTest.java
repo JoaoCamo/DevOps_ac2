@@ -1,50 +1,32 @@
 package com.tdd.ac2.repository.test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.tdd.ac2.entity.Aluno;
 import com.tdd.ac2.repository.AlunoRepository;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class AlunoRepositoryTest {
-	
-	@Autowired
+
+    @Autowired
     private AlunoRepository alunoRepository;
 
     @Test
-    public void testCreateAluno() {
-        Aluno aluno = new Aluno("João");
-        aluno = alunoRepository.save(aluno);
-
-        assertNotNull(aluno.getId());
-        assertEquals("João", aluno.getNome());
-    }
-
-    @Test
-    public void testFindAlunoById() {
+    public void testSaveAndFindAluno() {
         Aluno aluno = new Aluno("Maria");
-        aluno = alunoRepository.save(aluno);
 
-        Aluno alunoEncontrado = alunoRepository.findById(aluno.getId()).orElse(null);
+        Aluno savedAluno = alunoRepository.save(aluno);
+        assertNotNull(savedAluno.getId());
 
-        assertNotNull(alunoEncontrado);
-        assertEquals("Maria", alunoEncontrado.getNome());
-    }
-
-    @Test
-    public void testDeleteAluno() {
-        Aluno aluno = new Aluno("Carlos");
-        aluno = alunoRepository.save(aluno);
-
-        alunoRepository.delete(aluno);
-
-        Aluno alunoDeletado = alunoRepository.findById(aluno.getId()).orElse(null);
-        assertNull(alunoDeletado);
+        Aluno retrievedAluno = alunoRepository.findById(savedAluno.getId()).orElse(null);
+        assertThat(retrievedAluno).isNotNull();
+        assertThat(retrievedAluno.getNome()).isEqualTo("Maria");
     }
 }

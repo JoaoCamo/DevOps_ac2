@@ -3,6 +3,7 @@ package com.tdd.ac2.controller;
 import com.tdd.ac2.dto.AlunoDTO;
 import com.tdd.ac2.service.AlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,13 +25,9 @@ public class AlunoController {
         return alunoService.getAlunoById(id);
     }
 
-    @PostMapping
-    public AlunoDTO createAluno(@RequestBody AlunoDTO alunoDTO) {
-        return alunoService.createAluno(alunoDTO);
-    }
-
     @DeleteMapping("/{id}")
-    public void deleteAluno(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteAluno(@PathVariable Long id) {
         alunoService.deleteAluno(id);
+        return ResponseEntity.noContent().build();
     }
 }

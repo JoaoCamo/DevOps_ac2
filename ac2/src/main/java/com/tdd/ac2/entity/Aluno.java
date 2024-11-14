@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -23,11 +23,13 @@ public class Aluno {
     @Embedded
     private AlunoEmail email;
 
-    @OneToMany
+    @ManyToMany
     private List<Curso> cursos;
     
     private String nome;
     private int moedas;
+    
+    public Aluno() { }
 
     public Aluno(String nome) {
         this.nome = nome;
@@ -103,6 +105,11 @@ public class Aluno {
     public String getNome()
     {
     	return nome;
+    }
+    
+    public void setNome(String nome)
+    {
+    	this.nome = nome;
     }
 
     private Curso getCurso(Curso curso) {

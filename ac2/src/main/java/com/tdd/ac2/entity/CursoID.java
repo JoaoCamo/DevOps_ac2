@@ -11,8 +11,8 @@ public class CursoID {
     protected CursoID() {}
 
     public CursoID(String id) {
-        if (id == null || !id.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            throw new IllegalArgumentException("Email inválido");
+        if (id == null) {
+            throw new IllegalArgumentException("Id inválido");
         }
         this.id = id;
     }

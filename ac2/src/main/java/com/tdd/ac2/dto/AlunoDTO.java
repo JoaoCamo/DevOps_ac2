@@ -1,16 +1,20 @@
 package com.tdd.ac2.dto;
 
+import com.tdd.ac2.entity.Aluno;
+import com.tdd.ac2.entity.AlunoEmail;
+
 public class AlunoDTO {
+
     private Long id;
     private String nome;
-    private int moedas;
+    private String email;
 
     public AlunoDTO() {}
 
-    public AlunoDTO(Long id, String nome, int moedas) {
+    public AlunoDTO(Long id, String nome, String email) {
         this.id = id;
         this.nome = nome;
-        this.moedas = moedas;
+        this.email = email;
     }
 
     public Long getId() {
@@ -29,11 +33,23 @@ public class AlunoDTO {
         this.nome = nome;
     }
 
-    public int getMoedas() {
-        return moedas;
+    public String getEmail() {
+        return email;
     }
 
-    public void setMoedas(int moedas) {
-        this.moedas = moedas;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public static AlunoDTO fromEntity(Aluno aluno) {
+        AlunoDTO alunoDTO = new AlunoDTO();
+        alunoDTO.setId(aluno.getId());
+        alunoDTO.setNome(aluno.getNome());
+
+        if (aluno.getEmail() != null) {
+            alunoDTO.setEmail(aluno.getEmail().getEmailAddress());
+        }
+
+        return alunoDTO;
     }
 }
