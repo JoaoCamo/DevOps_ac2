@@ -1,7 +1,5 @@
 FROM openjdk:17
 
-RUN apt-get update && apt-get install -y git
-
 WORKDIR /ac2
 
 COPY target/*.jar /ac2/ac2-0.0.1-SNAPSHOT.jar
