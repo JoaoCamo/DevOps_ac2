@@ -11,6 +11,12 @@ pipeline {
     stage('Start container') {
       steps {
         echo 'Starting container from Docker Hub...'
+        script {
+          // Usando as credenciais do Docker Hub
+          withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
+            bat "docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD" // Login no Docker Hub
+          }
+        }
         bat 'docker-compose -f ac2/docker-compose.prod.yml pull' // Baixa a imagem do Docker Hub
         bat 'docker-compose -f ac2/docker-compose.prod.yml up -d --no-color'
         sleep time: 60, unit: 'SECONDS' // Aumenta o tempo para o serviço Spring Boot iniciar
