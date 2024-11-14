@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: ac2-prod
+
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/ac2_database_prod
+	username: postgres
+	password: ac2
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: false
+        use_sql_comments: false
+
+  h2:
+    console:
+      enabled: false

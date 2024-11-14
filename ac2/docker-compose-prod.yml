@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  database:
+    image: postgres
+    container_name: ac2_prod_database
+    environment:
+      POSTGRES_PASSWORD: ac2
+      POSTGRES_DB: ac2_database_prod
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+
+  api:
+    image: ac2_project
+    container_name: ac2_prod_api
+    environment:
+      SPRING_PROFILES_ACTIVE: prod
+      DB_HOST: database
+    ports:
+      - "8585:8585"
+    depends_on:
+      - database
+
+volumes:
+  db-volume:
