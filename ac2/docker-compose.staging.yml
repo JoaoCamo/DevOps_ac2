@@ -9,7 +9,7 @@ services:
       - db-volume:/var/lib/postgresql/data
 
   api:
-    image: devops/ac2
+    image: joaocamo/ac2:latest
     container_name: ac2_staging_api
     environment:
       SPRING_PROFILES_ACTIVE: prod
