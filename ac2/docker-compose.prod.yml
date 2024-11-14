@@ -11,7 +11,7 @@ services:
       - db-volume:/var/lib/postgresql/data
 
   api:
-    image: ac2_project
+    image: devops/ac2
     container_name: ac2_prod_api
     environment:
       SPRING_PROFILES_ACTIVE: prod
