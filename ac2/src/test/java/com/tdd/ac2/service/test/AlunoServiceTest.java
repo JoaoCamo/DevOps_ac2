@@ -1,6 +1,9 @@
 package com.tdd.ac2.service.test;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
@@ -30,6 +33,22 @@ class AlunoServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+    
+    @Test
+    void testGetAlunoById() {
+        Aluno aluno = new Aluno();
+        aluno.setId(1L);
+        aluno.setNome("Aluno 1");
+        aluno.setEmail(new AlunoEmail("aluno1@example.com"));
+
+        when(alunoRepository.findById(1L)).thenReturn(java.util.Optional.of(aluno));
+
+        AlunoDTO resultado = alunoService.getAlunoById(1L);
+
+        assertEquals("Aluno 1", resultado.getNome());
+        assertEquals("aluno1@example.com", resultado.getEmail());
+    }
+
 
     @Test
     void testGetAllAlunos() {
@@ -50,5 +69,60 @@ class AlunoServiceTest {
         assertEquals(2, alunos.size());
         assertEquals("Aluno 1", alunos.get(0).getNome());
         assertEquals("aluno1@example.com", alunos.get(0).getEmail());
+    }
+    
+    @Test
+    void testGetAlunoByIdAlunoNaoEncontrado() {
+        when(alunoRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> alunoService.getAlunoById(1L));
+    }
+
+    @Test
+    void testUpdateAluno() {
+        Aluno aluno = new Aluno();
+        aluno.setId(1L);
+        aluno.setNome("Aluno 1");
+        aluno.setEmail(new AlunoEmail("aluno1@example.com"));
+
+        AlunoDTO alunoDTO = new AlunoDTO();
+        alunoDTO.setNome("Aluno Atualizado");
+
+        when(alunoRepository.findById(1L)).thenReturn(java.util.Optional.of(aluno));
+
+        AlunoDTO updatedAlunoDTO = alunoService.updateAluno(1L, alunoDTO);
+
+        assertEquals("Aluno Atualizado", updatedAlunoDTO.getNome());
+    }
+
+    @Test
+    void testUpdateAlunoAlunoNaoEncontrado() {
+        AlunoDTO alunoDTO = new AlunoDTO();
+        alunoDTO.setNome("Aluno Atualizado");
+
+        when(alunoRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> alunoService.updateAluno(1L, alunoDTO));
+    }
+
+    @Test
+    void testDeleteAluno() {
+        Aluno aluno = new Aluno();
+        aluno.setId(1L);
+        aluno.setNome("Aluno 1");
+        aluno.setEmail(new AlunoEmail("aluno1@example.com"));
+
+        when(alunoRepository.findById(1L)).thenReturn(java.util.Optional.of(aluno));
+
+        alunoService.deleteAluno(1L);
+
+        verify(alunoRepository).delete(aluno);
+    }
+
+    @Test
+    void testDeleteAlunoAlunoNaoEncontrado() {
+        when(alunoRepository.findById(1L)).thenReturn(java.util.Optional.empty());
+
+        assertThrows(RuntimeException.class, () -> alunoService.deleteAluno(1L));
     }
 }

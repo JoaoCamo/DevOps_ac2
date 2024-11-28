@@ -1,12 +1,14 @@
 package com.tdd.ac2.entity.test;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
+import com.tdd.ac2.entity.AlunoEmail;
 import com.tdd.ac2.entity.Curso;
 import com.tdd.ac2.entity.CursoID;
 
@@ -53,4 +55,53 @@ public class CursoTest {
 	    assertFalse(curso.concluirCurso());
 	}
 
+	@Test
+	public void testGetTotalAulas() {
+	    Curso curso = new Curso("Matemática", 10);
+	    assertEquals(10, curso.getTotalAulas());
+	}
+	
+	@Test
+	public void testGetId() {
+	    Curso curso = new Curso("Matemática", 10);
+	    curso.setId(123L);
+	    assertEquals(123L, curso.getId());
+	}
+
+	@Test
+	public void testSetId() {
+	    Curso curso = new Curso("Matemática", 10);
+	    curso.setId(456L);
+	    assertEquals(456L, curso.getId());
+	}
+	
+	@Test
+    public void testAlunoEmailInvalido() {
+        assertThrows(IllegalArgumentException.class, () -> { new CursoID(null); }, "Id inválido");
+    }
+	
+	@Test
+	public void testEquals() {
+		CursoID cursoId1 = new CursoID("1");
+		CursoID cursoId2 = new CursoID("2");
+		
+		assertTrue(cursoId1.equals(cursoId1));
+        assertFalse(cursoId1.equals(cursoId2));
+        assertFalse(cursoId2.equals(new Object()));
+	}
+	
+	@Test
+	public void testCursoIDGetId()
+	{
+		CursoID cursoId1 = new CursoID("1");
+		assertEquals("1", cursoId1.getId());
+	}
+	
+	@Test
+	public void testCursoIDGetHash()
+	{
+		CursoID cursoId1 = new CursoID("1");
+		CursoID cursoId2 = new CursoID("1");
+		assertEquals(cursoId1.hashCode(), cursoId2.hashCode());
+	}
 }

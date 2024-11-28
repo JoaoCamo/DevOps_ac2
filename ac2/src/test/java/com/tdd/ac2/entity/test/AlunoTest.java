@@ -1,7 +1,9 @@
 package com.tdd.ac2.entity.test;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
@@ -69,4 +71,43 @@ public class AlunoTest {
         
         assertEquals(2, aluno.getCursos().size());
     }
+    
+    @Test
+    public void testVerificarConclusaoComCursoNulo() {
+        Aluno aluno = new Aluno("João");
+        Curso curso = new Curso("Matemática", 10);
+        boolean resultado = aluno.concluirCurso(curso);
+        assertFalse(resultado);
+    }
+    
+    @Test
+    public void testAlunoEmailConstrutorProtegido() {
+        AlunoEmail alunoEmail = new AlunoEmail("test@example.com") {};
+        assertNotNull(alunoEmail);
+    }
+    
+    @Test
+    public void testAlunoEmailInvalido() {
+        assertThrows(IllegalArgumentException.class, () -> { new AlunoEmail("invalid-email"); }, "Email inválido");
+    }
+
+    @Test
+    public void testEquals() {
+        AlunoEmail email1 = new AlunoEmail("test@example.com");
+        AlunoEmail email2 = new AlunoEmail("test@example.com");
+        AlunoEmail email3 = new AlunoEmail("different@example.com");
+        
+        assertTrue(email1.equals(email2));
+        assertFalse(email1.equals(email3));
+        assertFalse(email1.equals(new Object()));
+    }
+
+    @Test
+    public void testHashCode() {
+        AlunoEmail email1 = new AlunoEmail("test@example.com");
+        AlunoEmail email2 = new AlunoEmail("test@example.com");
+        
+        assertEquals(email1.hashCode(), email2.hashCode());
+    }
+
 }
