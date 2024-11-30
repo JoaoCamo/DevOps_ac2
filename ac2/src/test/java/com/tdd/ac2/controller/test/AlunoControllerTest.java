@@ -57,6 +57,23 @@ public class AlunoControllerTest {
                 .andExpect(jsonPath("$.nome").value("Aluno Teste"))
                 .andExpect(jsonPath("$.email").value("aluno@teste.com"));
     }
+    
+    @Test
+    public void testGetAlunoByIdFullConstructor() throws Exception {
+    	Long id = 1L;
+        String nome = "Aluno Teste";
+        String email = "aluno@teste.com";
+
+        AlunoDTO mockAluno = new AlunoDTO(id, nome, email);
+
+        Mockito.when(alunoService.getAlunoById(1L)).thenReturn(mockAluno);
+
+        mockMvc.perform(MockMvcRequestBuilders.get("/alunos/{id}", 1L)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.nome").value("Aluno Teste"))
+                .andExpect(jsonPath("$.email").value("aluno@teste.com"));
+    }
 
     @Test
     public void testDeleteAluno() throws Exception {

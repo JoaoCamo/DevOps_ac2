@@ -16,10 +16,12 @@ public class AlunoDtoTest {
         String email = "joao@example.com";
 
         AlunoDTO alunoDTO = new AlunoDTO(id, nome, email);
+        AlunoDTO alunoDTO2 = new AlunoDTO(id, nome, email);
 
         assertNotNull(alunoDTO);
         assertEquals(id, alunoDTO.getId());
         assertEquals(nome, alunoDTO.getNome());
         assertEquals(email, alunoDTO.getEmail());
+        assertEquals(alunoDTO, alunoDTO2);
     }
 }
